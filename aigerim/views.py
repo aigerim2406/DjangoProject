@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from .models import *
@@ -10,10 +10,9 @@ menu = [{'title': "О нас", 'url_name': 'about'},
 ]
 def index(request): #HttpRequest
     posts = Aigerim.objects.all()
-    cats = Category.objects.all()
+
     context = {
         'posts': posts,
-        'cats': cats,
         'menu': menu,
         'title': 'Главная страница',
         'cat_selected': 0,
@@ -36,18 +35,24 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
 def show_post(request, post_id):
-    return HttpResponse(f"Отображение статьи с id = {post_id}")
+    post = get_object_or_404(Aigerim, pk=post_id)
+
+    context = {
+        'post': post,
+        'menu': menu,
+        'name': post.name,
+        'cat_selected': post.cat_id,
+    }
+    return render(request, 'aigerim/post.html', context=context)
 
 def show_category(request,cat_id):
     posts = Aigerim.objects.filter(cat_id=cat_id)
-    cats = Category.objects.all()
 
     if len(posts)  == 0:
         raise Http404()
 
     context = {
         'posts': posts,
-        'cats': cats,
         'menu': menu,
         'title': 'Главная страница',
         'cat_selected': cat_id,
