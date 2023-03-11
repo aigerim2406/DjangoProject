@@ -8,7 +8,7 @@ html, body {
 }
 
 a {
-	color: #0059b2;
+	color: #ff4da6;
 	text-decoration: none;
 }
 a:hover {
@@ -36,7 +36,7 @@ p.link-read-post {
 p.link-read-post a {
 	padding: 10px;
 	min-width: 100px;
-	background: #333671;
+	background: #4f54b0;
 	color: #fff;
 	text-decoration: none;
 }
