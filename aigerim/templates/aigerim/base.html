@@ -15,14 +15,15 @@
        {% block mainmenu %}
             <div class="header">
                 <ul id="mainmenu" class="mainmenu">
-                    <li class="logo"></li>
+                    <li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
                     {% for a in menu %}
-                      {% if not forloop.last %}
-                       <li><a href="{% url a.url_name %}">{{a.url_name}}</a></li>
-                      {% else %}
-                        <li class="last"><a href="{% url a.url_name %}">{{a.url_name}} </a></li>
-                      {% endif %}
+                       <li><a href="{% url 'home' %}">{{a.name}}</a></li>
                     {% endfor %}
+                    {% if request.user.is_authenticated %}
+                    <li class="last">{{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+                    {% else %}
+                    <li class="last"><a href="{% url 'logout' %}">Регистрация</a> | <a href=""></a></li>
+                    {% endif %}
                 </ul>
                 <div class="clear"></div>
             </div>
